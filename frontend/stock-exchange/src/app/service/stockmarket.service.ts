@@ -45,7 +45,7 @@ export class StockmarketService {
       'description': description,
       'currentPrice': stockPrice
     }, {
-      headers: {'Authorization': `Bearer ${token}`}
+      headers: {'Authorization': `Bearer ${token}`}, responseType: 'text' as 'json'
     });
   }
 
