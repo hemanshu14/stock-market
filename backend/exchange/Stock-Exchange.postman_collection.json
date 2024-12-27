@@ -1,0 +1,255 @@
+{
+	"info": {
+		"_postman_id": "7883b380-d4f2-4616-a841-cd5af30ff0ab",
+		"name": "Stock-Exchange",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27900643"
+	},
+	"item": [
+		{
+			"name": "Sign up User",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"emailId\": \"john.doe@test.com\",\n    \"password\": \"qwerty\",\n    \"name\": \"John\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8005/users/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8005",
+					"path": [
+						"users",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"emailId\": \"john.doe@test.com\",\n    \"password\": \"qwerty\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8005/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8005",
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Stock",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTczNTAzNzAxNiwiZXhwIjoxNzM1MDQwNjE2fQ.q_eXHk5x8mTkVkRZfjKKyqylplgah44URvBfsWi4ttg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"microsoft\",\n    \"description\": \"stock of microsoft co.\",\n    \"currentPrice\": 9.8\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8005/api/v1/stocks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8005",
+					"path": [
+						"api",
+						"v1",
+						"stocks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Stock",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTczNDk1NDQyNSwiZXhwIjoxNzM0OTU4MDI1fQ.TbpmewhSJ56av7p8XxbgAGEF0nUMzefQUDzjXm_gmuM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1,\n    \"currentPrice\": 24.8\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8005/api/v1/stocks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8005",
+					"path": [
+						"api",
+						"v1",
+						"stocks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Stock to a Stock Exchange",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTczNDk2MTUxOCwiZXhwIjoxNzM0OTY1MTE4fQ.s9v-hL6EmqPAbgjf9FxtSreX044OwizCIQgXhWx9bxs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8005/api/v1/stock-exchanges/NASDAQ",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8005",
+					"path": [
+						"api",
+						"v1",
+						"stock-exchanges",
+						"NASDAQ"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Stocks from a Stock Exchange",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTczNDYzMDQyMiwiZXhwIjoxNzM0NjM0MDIyfQ.9CIGODlAWvELWSn4HAmF8nuJWew47UdS68_K5KApwGY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8005/api/v1/stock-exchanges/BSE",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8005",
+					"path": [
+						"api",
+						"v1",
+						"stock-exchanges",
+						"BSE"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get stock exchanges",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "null",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8005/api/v1/stock-exchanges",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8005",
+					"path": [
+						"api",
+						"v1",
+						"stock-exchanges"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

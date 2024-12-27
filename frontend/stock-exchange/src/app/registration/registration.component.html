@@ -1,0 +1,61 @@
+<div class="form-container">
+  <div *ngIf="userRegistered" class="text-success">
+    User has been registered successfully. <label class="col-8 mt-2 anchor" (click)="openLoginPage()">Please
+    login</label>
+  </div>
+  <form *ngIf="!userRegistered" class="form-signin login-form" [formGroup]="registrationForm"
+        (ngSubmit)="onSubmit(registrationForm)">
+    <h3 class="txt-color-mg">Sign Up</h3>
+    <label for="inputEmail" class="sr-only">Email Id:</label>
+    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" formControlName="email"
+           required autofocus/>
+
+    <div
+      *ngIf="registrationForm.controls['email']?.invalid && (registrationForm.controls['email'].dirty || registrationForm.controls['email'].touched)">
+      <div *ngIf="registrationForm.controls['email'].errors?.['required']" class="txt-error">
+        Email id is required.
+      </div>
+      <div *ngIf="registrationForm.controls['email'].errors?.['email']" class="txt-error">
+        Email id must be a valid email address.
+      </div>
+    </div>
+
+    <label for="inputPassword" class="sr-only">Password:</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Password" formControlName="password"
+           required/>
+
+    <div
+      *ngIf="registrationForm.controls['password']?.invalid && (registrationForm.controls['password'].dirty || registrationForm.controls['password'].touched)">
+      <div *ngIf="registrationForm.controls['password'].errors?.['required']" class="txt-error">
+        Password is required.
+      </div>
+      <div *ngIf="registrationForm.controls['password'].errors?.['minlength']" class="txt-error">
+        Password must be at least 8 characters long.
+      </div>
+    </div>
+
+    <label for="name" class="sr-only">Name:</label>
+    <input type="text" id="name" class="form-control" placeholder="Name" formControlName="name" required/>
+
+    <div
+      *ngIf="registrationForm.controls['name']?.invalid && (registrationForm.controls['name'].dirty || registrationForm.controls['name'].touched)"
+      class="txt-error">
+      Name is required.
+    </div>
+
+    <div class="row">
+      <div class="col-8 mt-2 anchor" (click)="openLoginPage()">Already User?</div>
+      <div class="col-4">
+        <button class="btn btn-lg btn-primary btn-block mt-2 right-corner" [disabled]="!registrationForm.valid"
+                type="submit">Sign Up
+        </button>
+      </div>
+
+    </div>
+    <div class="row" *ngIf="errorMessage && !(registrationForm.get('email')?.dirty || registrationForm.get('email')?.touched)">
+      <div class="col-8 txt-error">
+        {{errorMessage}}
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,156 @@
+<div class="form-container container-fluid" role="main">
+  <div class="stockmarket-form">
+    <div class="txt-color-mg text-wrap text-center">
+      <div>
+      <h3 class="d-block d-md-inline">Hello {{name}}</h3>
+      </div>
+      <div>
+      <h3 class="d-block d-md-inline">Welcome to stock market application</h3>
+      </div>
+    </div>
+    <div class="row mt-3" role="navigation">
+      <div class="col-4">
+        <button id="viewStocks" class="btn btn-lg btn-primary btn-block mt-2 right-corner" (click)="viewStockExchanges()">View Stocks
+        </button>
+      </div>
+      <div class="col-4">
+        <button id="viewCreateStock" class="btn btn-lg btn-primary btn-block mt-2 right-corner" (click)="viewStockForm()">Create Stock
+        </button>
+      </div>
+      <div class="col-4">
+        <button id="viewAddStock" class="btn btn-lg btn-primary btn-block mt-2 right-corner" (click)="viewAddStockFormFunc()">Add Stock
+        </button>
+      </div>
+    </div>
+    <div class="stockmarket-form" *ngIf="viewStockExchangeForm" role="region" aria-labelledby="stockExchangeForm">
+      <form [formGroup]="stockExchangeForm">
+        <label for="selectStockExchange" class="sr-only">Please select a stock exchange to view its stocks:</label>
+        <select id="selectStockExchange" class="form-control" formControlName="stockExchange"
+                (change)="fetchStocks($event)">
+          <option value="" selected disabled>Please select</option>
+          <ng-container *ngFor="let exchange of stockExchanges">
+            <option *ngIf="exchange.liveInMarket" [value]="exchange.name">{{exchange.name}}</option>
+          </ng-container>
+        </select>
+      </form>
+      <div *ngIf="successMessage" class="text-success">
+        {{successMessage}}
+      </div>
+      <div class="table-responsive" *ngIf="stocks && stocks.length > 0">
+      <table *ngIf="stocks && stocks.length > 0" class="table table-striped mt-3" role="table">
+        <thead>
+        <tr>
+          <th scope="col" role="columnheader">#</th>
+          <th scope="col" role="columnheader">Stock Name</th>
+          <th scope="col" role="columnheader">Price</th>
+          <th scope="col" role="columnheader">Description</th>
+          <th scope="col" role="columnheader">Last updated</th>
+          <th scope="col" role="columnheader">Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let stock of stocks; let i = index" role="row">
+          <td role="cell">{{i + 1}}</td>
+          <td role="cell">{{stock.name}}</td>
+          <td role="cell" *ngIf="!stock.editable">{{stock.currentPrice}}</td>
+          <td role="cell" *ngIf="stock.editable">
+            <form [formGroup]="updateStockForm">
+              <input type="number" formControlName="updatedPrice" (keydown.enter)="updateStockPrice(stock)"/>
+            </form>
+          </td>
+          <td role="cell">{{stock.description}}</td>
+          <td role="cell">{{stock.lastUpdate | date:'dd-MM-yyyy'}}</td>
+          <td role="cell">
+            <button id="editButton" class="btn btn-link" (click)="editStock(stock)" aria-label="Edit Stock">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+      <div *ngIf="noStocks" class="txt-error" role="alert">
+        No stocks available for the selected stock exchange
+      </div>
+      <div *ngIf="errorMessage" class="txt-error" role="alert">
+        {{errorMessage}}
+      </div>
+    </div>
+
+    <form class="stockmarket-form" [formGroup]="stockForm" *ngIf="viewCreateStockForm" (ngSubmit)="createStock()" role="form" aria-labelledby="createStockForm">
+      <label for="stockName" class="sr-only">Stock Name:</label>
+      <input type="text" id="stockName" class="form-control" placeholder="Stock Name" formControlName="stockName"
+             required autofocus/>
+      <div
+        *ngIf="stockForm.get('stockName')?.invalid && (stockForm.get('stockName')?.dirty || stockForm.get('stockName')?.touched)">
+        <div *ngIf="stockForm.get('stockName')?.errors?.['required']" class="txt-error">Stock name is required.</div>
+      </div>
+      <label for="description" class="sr-only mt-2">Description</label>
+      <input type="text" id="description" class="form-control" placeholder="Description" formControlName="description"
+             required/>
+      <div
+        *ngIf="stockForm.get('description')?.invalid && (stockForm.get('description')?.dirty || stockForm.get('description')?.touched)"
+      >
+        <div *ngIf="stockForm.get('description')?.errors?.['required']" class="txt-error">Description is required.</div>
+      </div>
+      <label for="price" class="sr-only mt-2">Price</label>
+      <input type="number" id="price" class="form-control" placeholder="Price" formControlName="price" required/>
+      <div
+        *ngIf="stockForm.get('price')?.invalid && (stockForm.get('price')?.dirty || stockForm.get('price')?.touched)"
+      >
+        <div *ngIf="stockForm.get('price')?.errors?.['required']" class="txt-error">Price is required.</div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <button class="btn btn-lg btn-primary btn-block mt-2 right-corner" [disabled]="!stockForm.valid"
+                  type="submit">Create stock
+          </button>
+        </div>
+      </div>
+      <div *ngIf="successMessage" class="text-success">
+        {{successMessage}}
+      </div>
+      <div *ngIf="errorMessage" class="text-error">
+        {{errorMessage}}
+      </div>
+    </form>
+    <form class="stockmarket-form" [formGroup]="addStockForm" *ngIf="viewAddStockForm" (ngSubmit)="addStock()" role="form" aria-labelledby="addStockForm">
+      <label for="stockExchange" class="sr-only">Please select a stock exchange in which you want to add the stock
+        to:</label>
+      <select id="stockExchange" class="form-control" formControlName="stockExchangeName" required>
+        <option value="" selected disabled>Please select</option>
+        <option *ngFor="let exchange of stockExchanges" [value]="exchange.name">{{exchange.name}}</option>
+      </select>
+      <div
+        *ngIf="addStockForm.get('stockExchangeName')?.invalid && (addStockForm.get('stockExchangeName')?.dirty || addStockForm.get('stockExchangeName')?.touched)"
+      >
+        <div *ngIf="addStockForm.get('stockExchangeName')?.errors?.['required']" class="txt-error">Stock Exchange is
+          required.
+        </div>
+      </div>
+      <label for="stock" class="sr-only">Please select a stock:</label>
+      <select id="stock" class="form-control" formControlName="stockId" required>
+        <option value="" selected disabled>Please select</option>
+        <option *ngFor="let stock of stocksFromDb" [value]="stock.id">{{stock.name}}</option>
+      </select>
+      <div
+        *ngIf="addStockForm.get('stockId')?.invalid && (addStockForm.get('stockId')?.dirty || addStockForm.get('stockId')?.touched)"
+      >
+        <div *ngIf="addStockForm.get('stockId')?.errors?.['required']" class="txt-error">Stock is required.</div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <button class="btn btn-lg btn-primary btn-block mt-2 right-corner" [disabled]="!addStockForm.valid"
+                  type="submit">Add stock
+          </button>
+        </div>
+      </div>
+      <div *ngIf="successMessage" class="text-success">
+        {{successMessage}}
+      </div>
+      <div *ngIf="errorMessage" class="text-error">
+        {{errorMessage}}
+      </div>
+    </form>
+  </div>
+</div>
