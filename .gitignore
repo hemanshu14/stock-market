@@ -38,7 +38,7 @@ testem.log
 /typings
 
 # System files
-.DS_Store
+*.DS_Store
 Thumbs.db
 
 HELP.md
@@ -57,7 +57,7 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+*.idea
 *.iws
 *.iml
 *.ipr
