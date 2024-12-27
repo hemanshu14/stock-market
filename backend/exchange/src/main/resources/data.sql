@@ -11,6 +11,7 @@ INSERT INTO STOCK (id, name, description, current_price, last_update) VALUES (5,
 INSERT INTO STOCK (id, name, description, current_price, last_update) VALUES (6,'ING', 'ING bank', 12.7, '2024-12-24 11:43:47.682033');
 INSERT INTO STOCK (id, name, description, current_price, last_update) VALUES (7,'Rabobank', 'Rabobank co.', 10.8, '2024-12-24 11:43:47.682033');
 INSERT INTO STOCK (id, name, description, current_price, last_update) VALUES (8,'Tesla', 'Tesla co.', 29.5, '2024-12-24 11:43:47.682033');
+ALTER TABLE STOCK ALTER COLUMN id RESTART WITH 9;
 
 INSERT INTO STOCK_STOCK_EXCHANGE(stock_exchange_id, stock_id) VALUES (1, 1);
 INSERT INTO STOCK_STOCK_EXCHANGE(stock_exchange_id, stock_id) VALUES (1, 3);

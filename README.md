@@ -7,8 +7,8 @@ It allows you to do the following functionalities.
 
 # How to start the project?
 Clone the code from  and import it as a maven project in the IDE like Intellij or Eclipse.
-cd backend/exchange and Run the Application as a Spring Boot App from the IDE or run the command from the terminal: mvn spring-boot:run
-cd frontend/stock-exchange and run the below mentioned commands:
+- cd backend/exchange and Run the Application as a Spring Boot App from the IDE or run the command from the terminal: mvn spring-boot:run
+- cd frontend/stock-exchange and run the below mentioned commands:
 - Make sure you have npm or yarn set up in your system
 - run npm install/yarn install to install all the dependencies
 - Then run npm start/yarn start tos tart the application and go to http://localhost:4200/ to view the application
