@@ -19,5 +19,6 @@ Backend REST APIs are using H2 datatbase of spring boot and there is a schema fi
 There is a login screen and sign up screen to register new users in the DB.
 You can use existing added users in the DB to login. Please find below their details:
 - username: john.doe@test.com, password: qwerty
-- username: jane.doe@test.com, password: qwerty
-There is a POSTMAN collection also given in the backend folder
+- username: jane.doe@test.com, password: qwerty 
+
+There is a POSTMAN collection also given in the backend folder which has all the REST API details with examples.
